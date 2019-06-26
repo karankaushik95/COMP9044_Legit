@@ -11,3 +11,4 @@ if [ -d ".legit" ]; then
 	exit 1
 fi
 mkdir ".legit"
+echo "Initialized empty legit repository in .legit"
