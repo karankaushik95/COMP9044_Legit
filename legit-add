@@ -1,3 +1,24 @@
 #!/bin/dash
 
-echo Hi
+filename="`echo "$0" | cut -d'.' -f2 | tr -d '/'" " `"	
+
+if [ $# -eq 0 ]; then
+	echo "usage: "$filename" <filenames>" 
+	exit 1
+fi 
+for file in "$@"
+do
+	if [ ! -f  "$file" ]; then
+		echo ""$filename": error: can not open '"$file"'"
+		exit 1
+	fi
+done
+for file in "$@"
+do
+	if [ ! -f "/.legit/.git/index"  ]; then
+		echo -n "`touch ../.legit/.git/index.txt`"
+	else
+		echo "index is here"	
+	fi
+	
+done

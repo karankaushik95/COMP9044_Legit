@@ -2,3 +2,4 @@ Date		Start	Stop	Activity	Comments
 26/07/19	18:00	18:45	coding		initialize legit-init did initial basic things like checking for cmd line arguments and if directory exists
 26/07/19	18:46	18:46   facepalming     forgot to echo successful creation of repo. resubmitting
 26/07/19	20:30	20:40	coding		changed mkdir to mkdir -p to add .git as a subdirectory
+26/07/19	20:45	20:40	coding		started legit-add. Did initial basic things. Trying to figure out a way to create a file inside the directory
