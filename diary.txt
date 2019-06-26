@@ -1,0 +1,2 @@
+Date		Start	Stop	Activity	Comments
+26/07/19	18:00	18:45	coding		initialize legit-init did initial basic things like checking for cmd line arguments and if directory exists

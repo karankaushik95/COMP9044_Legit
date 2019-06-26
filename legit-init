@@ -1,0 +1,13 @@
+#!/bin/dash
+
+if [ $# -ne 0 ]; then
+	filename="`echo "$0" | cut -d'.' -f2 | tr -d '/'" " `"	
+	echo "usage: "$filename"" 
+	exit 1
+fi
+if [ -d ".legit" ]; then
+	filename="`echo "$0" | cut -d'.' -f2 | tr -d '/'" " `"	
+	echo "$filename: error: .legit already exists"
+	exit 1
+fi
+mkdir ".legit"
