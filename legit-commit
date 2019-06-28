@@ -7,7 +7,12 @@ if [ ! -d ".legit" ]; then
 	exit 1
 fi
 
-if [ $# -eq 0] then
+if [ $# -eq 0 ]; then
 	echo "usage: "$filename" [-a] -m commit-message" 
+	exit 1
+fi
+
+if [ ! -d ../.legit/index ]; then
+	echo "nothing to commit"
 	exit 1
 fi
