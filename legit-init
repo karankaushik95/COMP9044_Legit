@@ -1,14 +1,14 @@
 #!/bin/dash
 
+filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
+
 if [ $# -ne 0 ]; then
-	filename="`echo "$0" | cut -d'.' -f2 | tr -d '/'" " `"	
 	echo "usage: "$filename"" 
 	exit 1
 fi
 if [ -d ".legit" ]; then
-	filename="`echo "$0" | cut -d'.' -f2 | tr -d '/'" " `"	
-	echo "$filename: error: .legit already exists"
+	echo "$0: error: .legit already exists"
 	exit 1
 fi
-mkdir -p ".legit/.git"
+mkdir ".legit"
 echo "Initialized empty legit repository in .legit"
