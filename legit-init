@@ -7,8 +7,9 @@ if [ $# -ne 0 ]; then
 	exit 1
 fi
 if [ -d ".legit" ]; then
-	echo "$0: error: .legit already exists"
+
+	echo "$filename: error: .legit already exists"
 	exit 1
 fi
-mkdir ".legit"
+mkdir -p ".legit"
 echo "Initialized empty legit repository in .legit"

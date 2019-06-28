@@ -2,6 +2,10 @@
 
 filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
 
+if [ ! -d ".legit" ]; then
+	echo "$filename: error: no .legit directory containing legit repository exists"
+	exit 1
+fi
 if [ $# -eq 0 ]; then
 	echo "usage: "$filename" <filenames>" 
 	exit 1

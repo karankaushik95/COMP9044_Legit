@@ -4,3 +4,4 @@ Date		Start	Stop	Activity	Comments
 26/07/19	20:30	20:40	coding		changed mkdir to mkdir -p to add .git as a subdirectory
 26/07/19	20:45	20:40	coding		started legit-add. Did initial basic things. Trying to figure out a way to create a file inside the directory
 28/07/19	10:30	10:50	coding		continued work on legit-add. Fixed bugs and changed the direction in which legit-add works. Removed change from 20:40 26/07, .git is no longer a subdirectory. finished legit-add
+28/07/19	11:00		debugging
