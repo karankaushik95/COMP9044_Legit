@@ -11,3 +11,4 @@ Date		Start	Stop	Activity	Comments
 			    and cleanup		of new things that I can't remember at the moment. fixed file being removed from legit-add if file removed from original directory. Almost 							done with legit-commit
 30/06/19	11:00	14:15	coding		added code in legit-add to check validity of filename, polished legit-commit. Almost finished legit-commit. minor bugfixes remain
 30/06/19	19:40	19:43	bugfixing	fixed bugs with legit-commit cause by commit messages not putting a new line at the end
+30/06/19	20:50	20:56	coding		finished legit-log
