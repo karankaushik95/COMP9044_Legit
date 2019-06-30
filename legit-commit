@@ -63,5 +63,5 @@ commit=$(( commit+1 ))
 
 mkdir .legit/commit/"commit_"$commit""
 cp .legit/add/* .legit/commit/"commit_"$commit""
-echo "commit $commit $commitmessage" >> .legit/commit/commit_history.txt
+echo -n "commit $commit $commitmessage\\n" >> .legit/commit/commit_history.txt
 echo "Committed as commit "$commit""
