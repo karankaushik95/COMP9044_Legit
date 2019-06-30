@@ -1,9 +1,12 @@
 Date		Start	Stop	Activity	Comments
-26/07/19	18:00	18:45	coding		initialize legit-init did initial basic things like checking for cmd line arguments and if directory exists
-26/07/19	18:46	18:46   facepalming     forgot to echo successful creation of repo. resubmitting
-26/07/19	20:30	20:40	coding		changed mkdir to mkdir -p to add .git as a subdirectory
-26/07/19	20:45	20:40	coding		started legit-add. Did initial basic things. Trying to figure out a way to create a file inside the directory
-28/07/19	10:30	10:50	coding		continued work on legit-add. Fixed bugs and changed the direction in which legit-add works. Removed change from 20:40 26/07, .git is no 						longer a subdirectory. finished legit-add
-28/07/19	11:00	11:05	debugging	fixed bug with not checking if legit-init has been executed
-28/07/19	11:05	11:15	coding		started legit-commit
-28/07/19	13:55	14:05	coding		continued work on legit-commit. added case on how to check if there is nothing to commit 
+26/06/19	18:00	18:45	coding		initialize legit-init did initial basic things like checking for cmd line arguments and if directory exists
+26/06/19	18:46	18:46   facepalming     forgot to echo successful creation of repo. resubmitting
+26/06/19	20:30	20:40	coding		changed mkdir to mkdir -p to add .git as a subdirectory
+26/06/19	20:45	20:40	coding		started legit-add. Did initial basic things. Trying to figure out a way to create a file inside the directory
+28/06/19	10:30	10:50	coding		continued work on legit-add. Fixed bugs and changed the direction in which legit-add works. Removed change from 20:40 26/07, .git is no 						     longer a subdirectory. finished legit-add
+28/06/19	11:00	11:05	debugging	fixed bug with not checking if legit-init has been executed
+28/06/19	11:05	11:15	coding		started legit-commit
+28/06/19	13:55	14:05	coding		continued work on legit-commit. added case on how to check if there is nothing to commit
+29/06/19	18:00	01:50	coding		cleaned up directory creation in add and commit and moved them to init. added if loops to check for proper flags for commit added a ton  
+			    and cleanup		of new things that I can't remember at the moment. fixed file being removed from legit-add if file removed from original directory. Almost 							done with legit-commit
+30/06/19	11:00		coding		

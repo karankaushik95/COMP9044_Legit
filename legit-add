@@ -13,13 +13,17 @@ fi
 for file in "$@"
 do
 	if [ ! -f  "$file" ]; then
-		echo ""$filename": error: can not open '"$file"'"
-		exit 1
+		if [ -f ".legit/add/"$file"" ]; then
+			rm .legit/add/"$file"
+		else	 			
+			echo ""$filename": error: can not open '"$file"'"
+			exit 1
+		fi
 	fi
 done
-mkdir -p ".legit/index";
 for file in "$@"
 do
-	cp $file .legit/index
-	
+	if [ -f "$file" ]; then 		
+		cp $file .legit/add
+	fi
 done

@@ -11,5 +11,6 @@ if [ -d ".legit" ]; then
 	echo "$filename: error: .legit already exists"
 	exit 1
 fi
-mkdir -p ".legit"
+mkdir -p ".legit/commit"
+mkdir -p ".legit/add"
 echo "Initialized empty legit repository in .legit"
