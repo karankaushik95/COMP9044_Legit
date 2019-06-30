@@ -18,7 +18,7 @@ if [ -z "$check" ]; then
 	exit 1
 fi
 commit=$(echo "$1" | cut -d':' -f1)
-
+file=$(echo "$1" | cut -d':' -f2)
 if [ -z $commit ]; then
 
 	if [ ! -f .legit/index/$file ]; then
@@ -30,7 +30,7 @@ if [ -z $commit ]; then
 	fi
 fi
 			
-file=$(echo "$1" | cut -d':' -f2)
+
 check=$(cat .legit/commit/commit_history.txt | egrep "commit $commit")
 if [ -z "$check" ]; then
 	echo "$filename: error: unknown commit '$commit'"
