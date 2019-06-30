@@ -21,11 +21,11 @@ commit=$(echo "$1" | cut -d':' -f1)
 file=$(echo "$1" | cut -d':' -f2)
 if [ -z $commit ]; then
 
-	if [ ! -f .legit/index/$file ]; then
+	if [ ! -f .legit/add/$file ]; then
 		echo "$filename: error: '"$file"' not found in index"
 		exit 1
 	else
-		cat .legit/index/$file
+		cat .legit/add/$file
 		exit 1
 	fi
 fi
