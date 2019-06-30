@@ -13,3 +13,4 @@ Date		Start	Stop	Activity	Comments
 30/06/19	19:40	19:43	bugfixing	fixed bugs with legit-commit cause by commit messages not putting a new line at the end
 30/06/19	20:50	20:56	coding		finished legit-log
 30/06/19	21:30	21:50	coding		finished legit-show
+30/06/19	22:00	21:50	coding		actually finished legit-show this time. forgot :file option (without commit number)
