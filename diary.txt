@@ -12,3 +12,4 @@ Date		Start	Stop	Activity	Comments
 30/06/19	11:00	14:15	coding		added code in legit-add to check validity of filename, polished legit-commit. Almost finished legit-commit. minor bugfixes remain
 30/06/19	19:40	19:43	bugfixing	fixed bugs with legit-commit cause by commit messages not putting a new line at the end
 30/06/19	20:50	20:56	coding		finished legit-log
+30/06/19	21:30	21:50	coding		finished legit-show

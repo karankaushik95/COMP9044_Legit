@@ -1,0 +1,31 @@
+#!/bin/dash
+
+filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
+
+if [ ! -d ".legit" ]; then
+	echo "$filename: error: no .legit directory containing legit repository exists"
+	exit 1
+elif [ -z "$(ls -A .legit/commit)" ]; then
+	echo "$filename: error: your repository does not have any commits yet"
+	exit 1
+elif [ $# -ne 1 ]; then
+	echo "usage: $filename <commit>:<filename>"
+	exit 1
+fi
+check=$(echo "$1" | egrep ":")
+if [ -z "$check" ]; then
+	echo "$filename: error: invalid object "$1""	
+	exit 1
+fi
+commit=$(echo "$1" | cut -d':' -f1)
+file=$(echo "$1" | cut -d':' -f2)
+check=$(cat .legit/commit/commit_history.txt | egrep "commit $commit")
+if [ -z "$check" ]; then
+	echo "$filename: error: unknown commit '$commit'"
+	exit 1
+elif [ ! -f .legit/commit/commit_$commit/$file ]; then
+	echo "$filename: error: '"$file"' not found in commit $commit"
+	exit 1
+else
+	cat .legit/commit/commit_$commit/$file
+fi

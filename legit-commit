@@ -7,7 +7,7 @@ if [ ! -d ".legit" ]; then
 	exit 1
 fi
 
-if [ $# -eq 0 ]; then
+if [ $# -le 1 ]; then
 	echo "usage: "$filename" [-a] -m commit-message" 
 	exit 1
 
