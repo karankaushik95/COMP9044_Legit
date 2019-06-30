@@ -22,11 +22,12 @@ commit=$(echo "$1" | cut -d':' -f1)
 if [ -z $commit ]; then
 
 	if [ ! -f .legit/index/$file ]; then
-	echo "$filename: error: '"$file"' not found in index"
-	exit 1
-else
-	cat .legit/commit/commit_$commit/$file
-	exit 1
+		echo "$filename: error: '"$file"' not found in index"
+		exit 1
+	else
+		cat .legit/commit/commit_$commit/$file
+		exit 1
+	fi
 fi
 			
 file=$(echo "$1" | cut -d':' -f2)
