@@ -35,6 +35,17 @@ if [ -z $commit ]; then
 	commit=-1
 fi
 
+if [ $1 = "-a" ]; then
+	for file in *; do
+		if [ -f .legit/add/"$file" ]; then
+			cp $file .legit/add	
+		fi		
+	done
+commitmessage=$3;
+else
+	commitmessage=$2;		
+fi
+
 if [ $commit -ge 0 ]; then
 	dir="commit_$commit"
 	testvariable=$(diff .legit/commit/"$dir" .legit/add ) 	
@@ -47,7 +58,10 @@ elif [ -z "$(ls -A .legit/add)" ]; then
 	exit 1 
 fi
 commit=$(( commit+1 ))
+
+	
+
 mkdir .legit/commit/"commit_"$commit""
 cp .legit/add/* .legit/commit/"commit_"$commit""
-
-echo "Commited as commit "$commit""
+echo "commit $commit $commitmessage" >> .legit/commit/commit_history.txt
+echo "Committed as commit "$commit""

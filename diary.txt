@@ -9,4 +9,4 @@ Date		Start	Stop	Activity	Comments
 28/06/19	13:55	14:05	coding		continued work on legit-commit. added case on how to check if there is nothing to commit
 29/06/19	18:00	01:50	coding		cleaned up directory creation in add and commit and moved them to init. added if loops to check for proper flags for commit added a ton  
 			    and cleanup		of new things that I can't remember at the moment. fixed file being removed from legit-add if file removed from original directory. Almost 							done with legit-commit
-30/06/19	11:00		coding		
+30/06/19	11:00	14:15	coding		added code in legit-add to check validity of filename, polished legit-commit. Almost finished legit-commit. minor bugfixes remain

@@ -10,8 +10,20 @@ if [ $# -eq 0 ]; then
 	echo "usage: "$filename" <filenames>" 
 	exit 1
 fi 
+
+for file in "$@" 
+do
+	files=$(echo "$file" | egrep "[^a-zA-Z0-9._-]")	
+	#echo $files	
+	if [ ! -z $files ]; then	
+		echo ""$filename": error: invalid filename '"$file"'"
+		exit 1
+	fi
+done
+
 for file in "$@"
 do
+	
 	if [ ! -f  "$file" ]; then
 		if [ -f ".legit/add/"$file"" ]; then
 			rm .legit/add/"$file"
@@ -20,6 +32,8 @@ do
 			exit 1
 		fi
 	fi
+
+		
 done
 for file in "$@"
 do
