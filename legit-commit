@@ -17,8 +17,6 @@ elif [ $# -eq 3 ]  && ( [ $1  != "-a" ] || [ ! $2  = "-m" ] ) ; then
 elif [ $# -eq 2 ]  && [ $1  != "-m" ]; then
 	echo "usage: "$filename" [-a] -m commit-message" 
 	exit 1
-else
-	echo "usage: "$filename" [-a] -m commit-message"
 fi
 
 
