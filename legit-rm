@@ -1,0 +1,29 @@
+#!/bin/dash
+
+filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
+
+if [ ! -d ".legit" ]; then
+	echo "$filename: error: no .legit directory containing legit repository exists"
+	exit 1
+elif [ -z "$(ls -A .legit/commit)" ]; then
+	echo "$filename: error: your repository does not have any commits yet"
+	exit 1
+elif [ $# -lt 1  ] || [ $# -gt 3 ]; then
+	echo "usage: "$filename" [--force] [--cached] <filenames>"
+	exit 1
+elif [ $# -eq 3 ] && ( [ $1 != "--force"  ] || [ $2 != "--cached" ] ); then
+	echo "usage: "$filename" [--force] [--cached] <filenames>"
+	exit 1
+elif [ $# -eq 2 ] && ( ( [ $1 = "--force"  ] || [ $2 = "--cached" ] )  || ( [ $1 != "--force"  ] || [ $! != "--cached" ] ) ); then
+	echo "usage: "$filename" [--force] [--cached] <filenames>"
+	exit 1
+elif [ $# -eq 1 ]; then
+	testing=`echo "$1" | egrep "[^-]{2}"`	
+	if [ ! -z $testing ]; then	
+		echo "usage: "$filename" [--force] [--cached] <filenames>"
+		exit 1
+	fi
+fi	
+
+#clear to execute I think
+

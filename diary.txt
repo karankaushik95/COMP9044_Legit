@@ -14,3 +14,4 @@ Date		Start	Stop	Activity	Comments
 30/06/19	20:50	20:56	coding		finished legit-log
 30/06/19	21:30	21:50	coding		finished legit-show
 30/06/19	22:00	22:30	coding		actually finished legit-show this time. forgot :file option (without commit number). accidentally passed legit-add -a too?
+05/07/19	10:26	10:50	coding		started legit-rm. Did basic things such as error checking for proper options. And did some cleanup with if loops and missing some 							conditions if number of arguments more or less than needed

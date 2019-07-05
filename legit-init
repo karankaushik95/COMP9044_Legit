@@ -5,8 +5,7 @@ filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
 if [ $# -ne 0 ]; then
 	echo "usage: "$filename"" 
 	exit 1
-fi
-if [ -d ".legit" ]; then
+elif [ -d ".legit" ]; then
 
 	echo "$filename: error: .legit already exists"
 	exit 1
