@@ -18,3 +18,4 @@ Date		Start	Stop	Activity	Comments
 05/07/19	21:30	01:30	coding		wrote legit-rm but it was really really buggy and didn't work half the time. forgot to commit
 06/07/19	14:00	15:00	debugging	rewrote parts of code to make it cleaner. didn't commit because was in no internet zone
 06/07/19	22:00	03:00	coding		finished legit-rm. committed finally
+07/07/19	03:10	04:00	debugging	i lied i hate myself nothing works now why is legit-rm so hard why is life so hard

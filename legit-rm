@@ -36,7 +36,7 @@ if [ $# -eq 0 ]; then
     echo "usage: "$filename" [--force] [--cached] <filenames>"
     exit 1
 fi
-echo "$commit zis is ze commit cache $cached forced $forced"
+#echo "$commit zis is ze commit cache $cached forced $forced"
 for file in $@; do
 
     arg=`echo "$file" | grep ^--`
@@ -53,43 +53,42 @@ for file in $@; do
 		if [ $cached -eq 0 ]; then
 			rm -f "$file"
 		fi
-		rm -f ".legit/add/"$file""
+		rm -f .legit/add/"$file"
 		exit 1
 	fi	
+	
+
+	if [ -z "$(diff -Nq ".legit/add/"$file"" "$file")" ]; then		
+		if [ $cached -eq 1 ]; then
+			rm -f .legit/add/"$file"		
+		elif [ -z "$(diff -Nq ".legit/add/"$file"" ".legit/commit/commit_$commit/"$file"")" ]; then
+			echo "$filename: error: '"$file"' has changes staged in the index"
+			exit 1
+		fi
 		
-	#redundant condition
-	
-	
+		if [ $cached -eq 0 ]; then
+			rm -f "$file"
+		fi	
+		rm -f .legit/add/"$file"
+		exit 1
+	else	
+		if [ -z "$(diff -Nq ".legit/add/"$file"" ".legit/commit/commit_$commit/"$file"")" ]; then
+			if [ $cached -eq 1 ]; then
+				rm -f .legit/add/"$file"	
+				exit 1
+			fi
+			echo "$filename: error: '"$file"' in repository is different to working file"
+			exit 1
+		fi		
+				
+		if [ ! -z "$(diff -Nq ".legit/add/"$file"" ".legit/commit/commit_$commit/"$file"")" ]; then
+			echo "$filename: error: '"$file"' in index is different to both working file and repository"
+			exit 1
+		fi		
+	fi		
 		#Rearrange, repo check comes last
 		#in repo, just do comparisons and deletions no need to check for forced, only for cached!
-		if [ -z "$(diff -Nq ".legit/add/"$file"" ".legit/commit/commit_$commit/"$file"")" ]; then
-	            if [ -z "$(diff -Nq ".legit/add/"$file"" "$file")" ]; then               
-	                if [ $cached -eq 0 ]; then
-	                    rm -f "$file";
-	                fi
-		    else
-	
-			if [ $cached -eq 0 ]; then	
-				echo "$filename: error: '"$file"' in repository is different to working file"
-				exit 1
-			fi		
-		    fi
-		    rm -f ".legit/add/"$file""
-	            exit 1	
-		else
-			if [ -z "$(diff -Nq ".legit/add/"$file"" "$file")" ]; then
-				if [ $cached -eq 1 ]; then
-					rm -f ".legit/add/"$file""
-	           			exit 1					
-				else
-					echo "$filename: error: '"$file"' has changes staged in the index"
-					exit 1
-				fi
-			else
-				echo "$filename: error: '"$file"' in index is different to both working file and repository"
-				exit 1		
-			fi
-		fi
+		
 		
     fi
 done
