@@ -46,6 +46,11 @@ else
 	commitmessage=$2;		
 fi
 
+if [ -z "$commitmessage" ]; then
+	echo "usage: "$filename" [-a] -m commit-message" 
+	exit 1
+fi
+
 if [ $commit -ge 0 ]; then
 	dir="commit_$commit"
 	testvariable=$(diff .legit/commit/"$dir" .legit/add ) 	
@@ -60,8 +65,9 @@ fi
 commit=$(( commit+1 ))
 
 	
-
 mkdir .legit/commit/"commit_"$commit""
-cp .legit/add/* .legit/commit/"commit_"$commit""
-echo -n "commit $commit $commitmessage\\n" >> .legit/commit/commit_history.txt
+if [ ! -z "$(ls -A .legit/add)" ]; then
+	cp ".legit/add"/* .legit/commit/"commit_"$commit""
+fi
+echo -n "commit $commit $commitmessage\\n" >>.legit/commit/commit_history.txt
 echo "Committed as commit "$commit""
