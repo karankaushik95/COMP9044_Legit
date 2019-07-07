@@ -20,3 +20,5 @@ Date		Start	Stop	Activity	Comments
 06/07/19	22:00	03:00	coding		finished legit-rm. committed finally
 07/07/19	03:10	04:00	debugging	i lied i hate myself nothing works now why is legit-rm so hard why is life so hard
 07/07/19	13:00	18:30	debugging	I don't know how I fixed it but legit-rm works now
+07/07/19	21:00	21:30	coding		started legit-status. Wrote a basic loop just to get all the files in another status file. Now dinner break :) Pizza here I come! 
+07/07/19	22:30	00:30	coding		Finished legit-status. Fixed bug in legit-rm cause of exit 1s. Used continue instead

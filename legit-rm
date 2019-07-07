@@ -37,8 +37,8 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 #echo "$commit zis is ze commit cache $cached forced $forced"
-for file in $@; do
-
+for file in "$@"; do
+    #echo $file	
     arg=`echo "$file" | grep ^--`
     if [ ! -z $arg ]; then
         echo "usage: "$filename" [--force] [--cached] <filenames>"
@@ -54,14 +54,14 @@ for file in $@; do
 			rm -f "$file"
 		fi
 		rm -f .legit/add/"$file"
-		exit 1
+		continue
 	fi	
 	
 
 	if [ -f "$file" ] && [ -f .legit/add/"$file" ] && [ -z "$(diff -Nq ".legit/add/"$file"" "$file")" ]; then		
 		if [ $cached -eq 1 ]; then
 			rm -f .legit/add/"$file"
-			exit 1		
+			continue		
 		elif ([ -f .legit/add/"$file" ] && [ ! -f .legit/commit/commit_$commit/"$file" ]) || [ -n "$(diff -q .legit/add/"$file" .legit/commit/commit_$commit/"$file")" ]; then
 			echo "$filename: error: '"$file"' has changes staged in the index"
 			exit 1
@@ -71,12 +71,12 @@ for file in $@; do
 			rm -f "$file"
 		fi	
 		rm -f .legit/add/"$file"
-		exit 1
+		continue
 	else	
 		if ( [ -f .legit/add/"$file" ] || [ ! -f .legit/commit/commit_$commit/"$file" ] ) && [ -z "$(diff -q .legit/add/"$file" .legit/commit/commit_$commit/"$file")" ]; then
 			if [ $cached -eq 1 ]; then
 				rm -f .legit/add/"$file"	
-				exit 1
+				continue
 			fi
 			echo "$filename: error: '"$file"' in repository is different to working file"
 			exit 1
