@@ -58,11 +58,10 @@ for file in $@; do
 	fi	
 	
 
-	if [ -f "$file" ] && [ -f .legit/add/"$file" ] && [ -z "$(diff -Nq ".legit/add/"$file"" "$file")" ]; then		
+	if [ -z "$(diff -Nq ".legit/add/"$file"" "$file")" ]; then		
 		if [ $cached -eq 1 ]; then
-			rm -f .legit/add/"$file"
-			exit 1		
-		elif ([ -f .legit/add/"$file" ] && [ ! -f .legit/commit/commit_$commit/"$file" ]) || [ -n "$(diff -q .legit/add/"$file" .legit/commit/commit_$commit/"$file")" ]; then
+			rm -f .legit/add/"$file"		
+		elif [ -z "$(diff -Nq ".legit/add/"$file"" ".legit/commit/commit_$commit/"$file"")" ]; then
 			echo "$filename: error: '"$file"' has changes staged in the index"
 			exit 1
 		fi
@@ -73,14 +72,16 @@ for file in $@; do
 		rm -f .legit/add/"$file"
 		exit 1
 	else	
-		if ( [ -f .legit/add/"$file" ] || [ ! -f .legit/commit/commit_$commit/"$file" ] ) && [ -z "$(diff -q .legit/add/"$file" .legit/commit/commit_$commit/"$file")" ]; then
+		if [ -z "$(diff -Nq ".legit/add/"$file"" ".legit/commit/commit_$commit/"$file"")" ]; then
 			if [ $cached -eq 1 ]; then
 				rm -f .legit/add/"$file"	
 				exit 1
 			fi
 			echo "$filename: error: '"$file"' in repository is different to working file"
 			exit 1
-		else
+		fi		
+				
+		if [ ! -z "$(diff -Nq ".legit/add/"$file"" ".legit/commit/commit_$commit/"$file"")" ]; then
 			echo "$filename: error: '"$file"' in index is different to both working file and repository"
 			exit 1
 		fi		
@@ -91,3 +92,4 @@ for file in $@; do
 		
     fi
 done
+
