@@ -1,1 +1,109 @@
 #!/usr/bin/perl -w
+
+use File::Basename;
+use File::Copy::Recursive qw(fcopy rcopy dircopy fmove rmove dirmove);
+use File::Path;
+# Checkout use snapshot save and load! 
+$legit = '.legit';
+$filename = basename($0);
+
+if (! -d $legit){
+
+	 die "$filename: error: no .legit directory containing legit repository exists\n"
+}
+$branch=getBranch();
+
+my @files = glob("./.legit/$branch/commit/*");
+@files or die "$filename: error: your repository does not have any commits yet\n";
+
+$delete = 0;	
+if (!@ARGV){
+
+	listBranches();
+	exit();	
+}
+
+elsif ($ARGV[0] =~ /^-d/){
+
+	$delete = 1;
+	shift @ARGV;	
+}
+
+
+$inputbranch = $ARGV[0];	
+
+if (@ARGV>1 or $branch =~ /^-/){
+	die "usage: $filename [-d] <branch>\n";
+}
+
+
+if ($delete == 1){
+
+	deleteBranch($inputbranch);
+}else
+{
+
+	createBranch($inputbranch);
+}
+
+sub getBranch{
+
+	open $F, '<' , ".legit/current_branch";
+	my $branch=<$F>;
+	close $F;
+	return $branch;
+
+}
+
+sub listBranches{
+
+	open $F, '<', ".legit/branches";
+	my @branches=<$F>;
+	close $F;
+	@branches = sort @branches;
+	print @branches;
+
+}
+
+sub createBranch{
+	
+	my ($create) = @_;
+	if (-d ".legit/$create"){
+		die "$filename: error: branch \'$create\' already exists\n";
+	}else{
+		mkdir ".legit/$create";
+		open $F, '>>', ".legit/branches";
+		print $F $create;
+		print $F "\n";
+		close $F;
+		rcopy(".legit/$branch", ".legit/$create");			
+		
+	}
+	
+}
+
+sub deleteBranch{
+
+	my ($destroy) = @_;
+	if (! -d ".legit/$destroy"){
+		die "$filename: error: branch \'$destroy\' does not exist\n";
+	}elsif ( "$destroy" eq "master"){
+		die "$filename: error: can not delete branch \'$destroy\'\n";
+	}
+	rmtree ".legit/$destroy";
+	open $F, '<', ".legit/branches";
+	my @array = <$F>;
+	close $F;
+	@array or die;	
+	open $F, '>', ".legit/branches";
+	foreach $line (@array){
+		chomp($line);		
+		if ("$line" eq "$destroy"){
+			next;		
+		}
+		print $F $line;
+		print $F "\n";	
+	}
+	close $F;
+	print "Deleted branch \'$destroy\'\n"
+}
