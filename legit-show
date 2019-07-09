@@ -5,13 +5,16 @@ filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
 if [ ! -d ".legit" ]; then
 	echo "$filename: error: no .legit directory containing legit repository exists"
 	exit 1
-elif [ -z "$(ls -A .legit/commit)" ]; then
+fi
+branch=`cat .legit/current_branch`
+if [ -z "$(ls -A .legit/"$branch"/commit)" ]; then
 	echo "$filename: error: your repository does not have any commits yet"
 	exit 1
 elif [ $# -ne 1 ]; then
 	echo "usage: $filename <commit>:<filename>"
 	exit 1
 fi
+
 check=$(echo "$1" | egrep ":")
 if [ -z "$check" ]; then
 	echo "$filename: error: invalid object "$1""	
@@ -21,23 +24,23 @@ commit=$(echo "$1" | cut -d':' -f1)
 file=$(echo "$1" | cut -d':' -f2)
 if [ -z $commit ]; then
 
-	if [ ! -f .legit/add/$file ]; then
+	if [ ! -f .legit/"$branch"/add/"$file" ]; then
 		echo "$filename: error: '"$file"' not found in index"
 		exit 1
 	else
-		cat .legit/add/$file
+		cat .legit/"$branch"/add/"$file"
 		exit 1
 	fi
 fi
 			
 
-check=$(cat .legit/commit/commit_history.txt | egrep "commit $commit")
+check=$(cat .legit/"$branch"/commit/commit_history.txt | egrep "commit $commit")
 if [ -z "$check" ]; then
 	echo "$filename: error: unknown commit '$commit'"
 	exit 1
-elif [ ! -f .legit/commit/commit_$commit/$file ]; then
+elif [ ! -f .legit/"$branch"/commit/commit_$commit/"$file" ]; then
 	echo "$filename: error: '"$file"' not found in commit $commit"
 	exit 1
 else
-	cat .legit/commit/commit_$commit/$file
+	cat .legit/"$branch"/commit/commit_$commit/"$file"
 fi

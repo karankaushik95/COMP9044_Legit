@@ -10,6 +10,8 @@ elif [ -d ".legit" ]; then
 	echo "$filename: error: .legit already exists"
 	exit 1
 fi
-mkdir -p ".legit/commit"
-mkdir -p ".legit/add"
+mkdir -p ".legit/master/commit"
+mkdir -p ".legit/master/add"
+echo "master" > ".legit/branches"
+echo -n "master" > ".legit/current_branch"
 echo "Initialized empty legit repository in .legit"

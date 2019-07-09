@@ -1,35 +1,35 @@
 #!/bin/dash
 
 filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
-
+branch=`cat .legit/current_branch`
 if [ ! -d ".legit" ]; then
     echo "$filename: error: no .legit directory containing legit repository exists"
     exit 1
-elif [ -z "$(ls -A .legit/commit)" ]; then
+elif [ -z "$(ls -A .legit/"$branch"/commit)" ]; then
     echo "$filename: error: your repository does not have any commits yet"
     exit 1
 fi
 
-commit=$(cat .legit/commit/commit_history.txt | cut -d' ' -f2 | tail -1)
-touch .status;
+commit=$(cat .legit/"$branch"/commit/commit_history.txt | cut -d' ' -f2 | tail -1)
+#touch .status;
 echo -n >.status;
-if [ ! -z "$(ls -A .legit/commit/commit_$commit)" ]; then
+if [ ! -z "$(ls -A .legit/"$branch"/commit/commit_$commit)" ]; then
 	
-	for file in ".legit/commit/commit_$commit"/*; do
+	for file in ".legit/"$branch"/commit/commit_$commit"/*; do
 		file=`basename "$file"`
 		#echo $file		
 		if [ ! -d  "$file" ]; then		
-			if [ ! -f .legit/add/"$file" ]; then
+			if [ ! -f .legit/"$branch"/add/"$file" ]; then
 				if [ -f "$file" ]; then
 					echo ""$file" - untracked" >>.status;
 				else
 					echo ""$file" - deleted" >>.status;
 				fi
 			else
-				if [ -z "$(diff -q .legit/add/"$file" .legit/commit/commit_$commit/"$file")" ]; then
+				if [ -z "$(diff -q .legit/"$branch"/add/"$file" .legit/"$branch"/commit/commit_$commit/"$file")" ]; then
 					if [ ! -f "$file" ]; then
 						echo ""$file" - file deleted" >>.status;									
-					elif [ -z "$(diff -q ".legit/add/"$file"" "$file")" ]; then
+					elif [ -z "$(diff -q ".legit/"$branch"/add/"$file"" "$file")" ]; then
 						echo ""$file" - same as repo" >>.status;
 					else
 						echo ""$file" - file changed, changes not staged for commit" >>.status;
@@ -37,7 +37,7 @@ if [ ! -z "$(ls -A .legit/commit/commit_$commit)" ]; then
 				else
 					if [ ! -f "$file" ]; then
 						echo ""$file" - file deleted" >>.status;												
-					elif [ -z "$(diff -q ".legit/add/"$file"" "$file")" ]; then
+					elif [ -z "$(diff -q ".legit/"$branch"/add/"$file"" "$file")" ]; then
 						echo ""$file" - file changed, changes staged for commit" >>.status;
 					else
 						echo ""$file" - file changed, different changes staged for commit" >>.status;
@@ -48,9 +48,9 @@ if [ ! -z "$(ls -A .legit/commit/commit_$commit)" ]; then
 	done
 fi
 
-if [ ! -z "$(ls -A .legit/add/)" ]; then
+if [ ! -z "$(ls -A .legit/"$branch"/add/)" ]; then
 
-	for file in ".legit/add"/*; do
+	for file in ".legit/"$branch"/add"/*; do
 		file=`basename "$file"`
 		if [ ! -d  "$file" ]; then		
 			if ! grep -q "^$file" .status			

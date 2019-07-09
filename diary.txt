@@ -22,3 +22,4 @@ Date		Start	Stop	Activity	Comments
 07/07/19	13:00	18:30	debugging	I don't know how I fixed it but legit-rm works now
 07/07/19	21:00	21:30	coding		started legit-status. Wrote a basic loop just to get all the files in another status file. Now dinner break :) Pizza here I come! 
 07/07/19	22:30	00:30	coding		Finished legit-status. Fixed bug in legit-rm cause of exit 1s. Used continue instead
+09/07/19	21:00	22:00	coding		Started subset-2. preparing to make changes in earlier code to accommodate branches. Found some earlier overlooked bugs

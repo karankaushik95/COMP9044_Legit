@@ -5,7 +5,9 @@ filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
 if [ ! -d ".legit" ]; then
     echo "$filename: error: no .legit directory containing legit repository exists"
     exit 1
-elif [ -z "$(ls -A .legit/commit)" ]; then
+fi
+branch=`cat .legit/current_branch`
+if [ -z "$(ls -A .legit/"$branch"/commit)" ]; then
     echo "$filename: error: your repository does not have any commits yet"
     exit 1
 elif [ $# -lt 1  ]; then
@@ -15,7 +17,7 @@ fi
 
 forced=0
 cached=0
-commit=$(cat .legit/commit/commit_history.txt | cut -d' ' -f2 | tail -1)
+commit=$(cat .legit/"$branch"/commit/commit_history.txt | cut -d' ' -f2 | tail -1)
 
 arg=`echo "$1" | grep ^--`
 while [ ! -z $arg ]; do
@@ -45,7 +47,7 @@ for file in "$@"; do
         exit 1
     fi
     
-    if [ ! -f ".legit/add/"$file"" ]; then
+    if [ ! -f ".legit/"$branch"/add/"$file"" ]; then
 	echo "$filename: error: '"$file"' is not in the legit repository"
 	exit 1
     else 
@@ -53,16 +55,16 @@ for file in "$@"; do
 		if [ $cached -eq 0 ]; then
 			rm -f "$file"
 		fi
-		rm -f .legit/add/"$file"
+		rm -f .legit/"$branch"/add/"$file"
 		continue
 	fi	
 	
 
-	if [ -f "$file" ] && [ -f .legit/add/"$file" ] && [ -z "$(diff -Nq ".legit/add/"$file"" "$file")" ]; then		
+	if [ -f "$file" ] && [ -f .legit/"$branch"/add/"$file" ] && [ -z "$(diff -Nq ".legit/"$branch"/add/"$file"" "$file")" ]; then		
 		if [ $cached -eq 1 ]; then
-			rm -f .legit/add/"$file"
+			rm -f .legit/"$branch"/add/"$file"
 			continue		
-		elif ([ -f .legit/add/"$file" ] && [ ! -f .legit/commit/commit_$commit/"$file" ]) || [ -n "$(diff -q .legit/add/"$file" .legit/commit/commit_$commit/"$file")" ]; then
+		elif ([ -f .legit/"$branch"/add/"$file" ] && [ ! -f .legit/"$branch"/commit/commit_$commit/"$file" ]) || [ -n "$(diff -q .legit/"$branch"/add/"$file" .legit/"$branch"/commit/commit_$commit/"$file")" ]; then
 			echo "$filename: error: '"$file"' has changes staged in the index"
 			exit 1
 		fi
@@ -70,12 +72,12 @@ for file in "$@"; do
 		if [ $cached -eq 0 ]; then
 			rm -f "$file"
 		fi	
-		rm -f .legit/add/"$file"
+		rm -f .legit/"$branch"/add/"$file"
 		continue
 	else	
-		if ( [ -f .legit/add/"$file" ] || [ ! -f .legit/commit/commit_$commit/"$file" ] ) && [ -z "$(diff -q .legit/add/"$file" .legit/commit/commit_$commit/"$file")" ]; then
+		if ( [ -f .legit/"$branch"/add/"$file" ] || [ ! -f .legit/"$branch"/commit/commit_$commit/"$file" ] ) && [ -z "$(diff -q .legit/"$branch"/add/"$file" .legit/"$branch"/commit/commit_$commit/"$file")" ]; then
 			if [ $cached -eq 1 ]; then
-				rm -f .legit/add/"$file"	
+				rm -f .legit/"$branch"/add/"$file"	
 				continue
 			fi
 			echo "$filename: error: '"$file"' in repository is different to working file"

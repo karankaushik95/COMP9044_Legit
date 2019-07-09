@@ -5,13 +5,14 @@ filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
 if [ ! -d ".legit" ]; then
 	echo "$filename: error: no .legit directory containing legit repository exists"
 	exit 1
-
-elif [ -z "$(ls -A .legit/commit)" ]; then
+fi
+branch=`cat .legit/current_branch`
+if [ -z "$(ls -A .legit/"$branch"/commit)" ]; then
 	echo "$filename: error: your repository does not have any commits yet"
 	exit 1
 elif [ $# -ne 0 ]; then
 	echo "usage: "$filename"" 
 	exit 1
 else
-	cat .legit/commit/commit_history.txt | cut -d' ' --complement -f1 | sort -r
+	cat .legit/"$branch"/commit/commit_history.txt | cut -d' ' --complement -f1 | sort -r
 fi
