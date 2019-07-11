@@ -3,12 +3,12 @@
 filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
 
 if [ ! -d ".legit" ]; then
-    echo "$filename: error: no .legit directory containing legit repository exists"
+    echo "$filename: error: no .legit directory containing legit repository exists" >&2
     exit 1
 fi
 branch=`cat .legit/current_branch`
 if [ -z "$(ls -A .legit/"$branch"/commit)" ]; then
-    echo "$filename: error: your repository does not have any commits yet"
+    echo "$filename: error: your repository does not have any commits yet" >&2
     exit 1
 fi
 

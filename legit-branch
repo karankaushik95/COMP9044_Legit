@@ -9,12 +9,13 @@ $filename = basename($0);
 
 if (! -d $legit){
 
-	 die "$filename: error: no .legit directory containing legit repository exists\n"
+	print STDERR "$filename: error: no .legit directory containing legit repository exists\n";
+	exit 1;
 }
 $branch=getBranch();
 
 my @files = glob("./.legit/$branch/commit/*");
-@files or die "$filename: error: your repository does not have any commits yet\n";
+@files or (print STDERR "$filename: error: your repository does not have any commits yet\n" and exit 1);
 
 $delete = 0;	
 if (!@ARGV){
@@ -33,7 +34,8 @@ elsif ($ARGV[0] =~ /^-d/){
 $inputbranch = $ARGV[0];	
 
 if (@ARGV>1 or $branch =~ /^-/){
-	die "usage: $filename [-d] <branch>\n";
+	print STDERR "usage: $filename [-d] <branch>\n";
+	exit 1;
 }
 
 
@@ -69,7 +71,8 @@ sub createBranch{
 	
 	my ($create) = @_;
 	if (-d ".legit/$create"){
-		die "$filename: error: branch \'$create\' already exists\n";
+		print STDERR "$filename: error: branch \'$create\' already exists\n";
+		exit 1;
 	}else{
 		mkdir ".legit/$create";
 		open $F, '>>', ".legit/branches";
@@ -86,9 +89,11 @@ sub deleteBranch{
 
 	my ($destroy) = @_;
 	if (! -d ".legit/$destroy"){
-		die "$filename: error: branch \'$destroy\' does not exist\n";
+		print STDERR "$filename: error: branch \'$destroy\' does not exist\n";
+		exit 1;
 	}elsif ( "$destroy" eq "master"){
-		die "$filename: error: can not delete branch \'$destroy\'\n";
+		print STDERR "$filename: error: can not delete branch \'$destroy\'\n";
+		exit 1;
 	}
 	rmtree ".legit/$destroy";
 	open $F, '<', ".legit/branches";

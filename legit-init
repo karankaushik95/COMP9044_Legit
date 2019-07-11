@@ -3,11 +3,11 @@
 filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
 
 if [ $# -ne 0 ]; then
-	echo "usage: "$filename"" 
+	echo "usage: "$filename"" >&2
 	exit 1
 elif [ -d ".legit" ]; then
 
-	echo "$filename: error: .legit already exists"
+	echo "$filename: error: .legit already exists" >&2
 	exit 1
 fi
 mkdir -p ".legit/master/commit"

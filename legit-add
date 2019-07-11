@@ -3,12 +3,12 @@
 filename="`echo "$0" | rev | cut -d'/' -f1 | rev `"
 
 if [ ! -d ".legit" ]; then
-	echo "$filename: error: no .legit directory containing legit repository exists"
+	echo "$filename: error: no .legit directory containing legit repository exists" >&2
 	exit 1
 fi
 branch=`cat .legit/current_branch`
 if [ $# -eq 0 ]; then
-	echo "usage: "$filename" <filenames>" 
+	echo "usage: "$filename" <filenames>" >&2
 	exit 1
 fi 
 
@@ -17,7 +17,7 @@ do
 	files=$(echo "$file" | egrep "[^a-zA-Z0-9._-]")	
 	#echo $files	
 	if [ ! -z $files ]; then	
-		echo ""$filename": error: invalid filename '"$file"'"
+		echo ""$filename": error: invalid filename '"$file"'" >&2
 		exit 1
 	fi
 done
@@ -31,7 +31,7 @@ do
 		if [ -f ".legit/"$branch"/add/"$file"" ]; then
 			rm .legit/"$branch"/add/"$file"
 		else	 			
-			echo ""$filename": error: can not open '"$file"'"
+			echo ""$filename": error: can not open '"$file"'" >&2
 			exit 1
 		fi
 	fi
