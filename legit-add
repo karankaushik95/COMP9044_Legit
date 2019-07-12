@@ -26,8 +26,8 @@ for file in "$@"
 do
 	
 	if [ ! -f  "$file" ]; then
-		if [ -f ".legit/"$branch"/add/"$file"" ]; then
-			rm .legit/"$branch"/add/"$file"
+		if [ -f ".legit/add/"$file"" ]; then
+			rm .legit/add/"$file"
 		else	 			
 			echo ""$filename": error: can not open '"$file"'" >&2
 			exit 1

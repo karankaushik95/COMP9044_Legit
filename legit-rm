@@ -55,7 +55,7 @@ for file in "$@"; do
 		if [ $cached -eq 0 ]; then
 			rm -f "$file"
 		fi
-		rm -f .legit/"$branch"/add/"$file"
+		rm -f .legit/add/"$file"
 		continue
 	fi	
 	
