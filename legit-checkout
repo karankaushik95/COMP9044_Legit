@@ -1,0 +1,38 @@
+#!/usr/bin/perl -w
+
+use File::Basename;
+
+$legit = '.legit';
+$filename = basename($0);
+
+if (! -d $legit){
+
+	print STDERR "$filename: error: no .legit directory containing legit repository exists\n";
+	exit 1;
+}
+
+my @files = glob("./.legit/$branch/commit/*");
+@files or (print STDERR "$filename: error: your repository does not have any commits yet\n" and exit 1);
+
+if (@ARGV != 1){
+	print STDERR "usage: $filename <branch>\n";
+	exit 1;
+}
+
+$branch=$ARGV[0];
+$current_branch = getBranch();
+
+sub getBranch{
+
+	open $F, '<' , ".legit/current_branch";
+	my $branch=<$F>;
+	close $F;
+	return $branch;
+
+}
+
+if ($branch eq $current_branch){
+
+	print "Already on '$branch'";
+	exit 0;
+}

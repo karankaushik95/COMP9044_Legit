@@ -38,7 +38,7 @@ if [ $# -eq 0 ]; then
     echo "usage: "$filename" [--force] [--cached] <filenames>" >&2
     exit 1
 fi
-#echo "$commit zis is ze commit cache $cached forced $forced"
+
 for file in "$@"; do
     #echo $file	
     arg=`echo "$file" | grep ^--`
@@ -47,7 +47,7 @@ for file in "$@"; do
         exit 1
     fi
     
-    if [ ! -f ".legit/"$branch"/add/"$file"" ]; then
+    if [ ! -f ".legit/add/"$file"" ]; then
 	echo "$filename: error: '"$file"' is not in the legit repository" >&2
 	exit 1
     else 
@@ -60,11 +60,11 @@ for file in "$@"; do
 	fi	
 	
 
-	if [ -f "$file" ] && [ -f .legit/"$branch"/add/"$file" ] && [ -z "$(diff -Nq ".legit/"$branch"/add/"$file"" "$file")" ]; then		
+	if [ -f "$file" ] && [ -f .legit/add/"$file" ] && [ -z "$(diff -Nq ".legit/add/"$file"" "$file")" ]; then		
 		if [ $cached -eq 1 ]; then
-			rm -f .legit/"$branch"/add/"$file"
+			rm -f .legit/add/"$file"
 			continue		
-		elif ([ -f .legit/"$branch"/add/"$file" ] && [ ! -f .legit/"$branch"/commit/commit_$commit/"$file" ]) || [ -n "$(diff -q .legit/"$branch"/add/"$file" .legit/"$branch"/commit/commit_$commit/"$file")" ]; then
+		elif ([ -f .legit/add/"$file" ] && [ ! -f .legit/"$branch"/commit/commit_$commit/"$file" ]) || [ -n "$(diff -q .legit/add/"$file" .legit/"$branch"/commit/commit_$commit/"$file")" ]; then
 			echo "$filename: error: '"$file"' has changes staged in the index" >&2
 			exit 1
 		fi
@@ -72,12 +72,12 @@ for file in "$@"; do
 		if [ $cached -eq 0 ]; then
 			rm -f "$file"
 		fi	
-		rm -f .legit/"$branch"/add/"$file"
+		rm -f .legit/add/"$file"
 		continue
 	else	
-		if ( [ -f .legit/"$branch"/add/"$file" ] || [ ! -f .legit/"$branch"/commit/commit_$commit/"$file" ] ) && [ -z "$(diff -q .legit/"$branch"/add/"$file" .legit/"$branch"/commit/commit_$commit/"$file")" ]; then
+		if ( [ -f .legit/add/"$file" ] || [ ! -f .legit/"$branch"/commit/commit_$commit/"$file" ] ) && [ -z "$(diff -q .legit/add/"$file" .legit/"$branch"/commit/commit_$commit/"$file")" ]; then
 			if [ $cached -eq 1 ]; then
-				rm -f .legit/"$branch"/add/"$file"	
+				rm -f .legit/add/"$file"	
 				continue
 			fi
 			echo "$filename: error: '"$file"' in repository is different to working file" >&2
@@ -87,9 +87,6 @@ for file in "$@"; do
 			exit 1
 		fi		
 	fi		
-		#Rearrange, repo check comes last
-		#in repo, just do comparisons and deletions no need to check for forced, only for cached!
-		
-		
+
     fi
 done

@@ -27,8 +27,6 @@ if  [ -f ".legit/"$branch"/commit/commit_history.txt" ]; then
 else
 	touch commit_history.txt	
 	mv commit_history.txt .legit/"$branch"/commit	
-	#echo "nah"	
-	
 fi
 
 if [ -z $commit ]; then
@@ -37,8 +35,8 @@ fi
 
 if [ $1 = "-a" ]; then
 	for file in *; do
-		if [ -f .legit/"$branch"/add/"$file" ]; then
-			cp "$file" .legit/"$branch"/add	
+		if [ -f .legit/add/"$file" ]; then
+			cp "$file" .legit/add	
 		fi		
 	done
 commitmessage=$3;
@@ -53,12 +51,12 @@ fi
 
 if [ $commit -ge 0 ]; then
 	dir="commit_$commit"
-	testvariable=$(diff .legit/"$branch"/commit/"$dir" .legit/"$branch"/add ) 	
+	testvariable=$(diff .legit/"$branch"/commit/"$dir" .legit/add ) 	
 	if [ -z  "$testvariable" ]; then
 		echo "nothing to commit"
 		exit 0	
 	fi
-elif [ -z "$(ls -A .legit/"$branch"/add)" ]; then
+elif [ -z "$(ls -A .legit/add)" ]; then
 	echo "nothing to commit"
 	exit 0 
 fi
@@ -66,8 +64,10 @@ commit=$(( commit+1 ))
 
 	
 mkdir .legit/"$branch"/commit/"commit_"$commit""
-if [ ! -z "$(ls -A .legit/"$branch"/add)" ]; then
-	cp ".legit/"$branch"/add"/* .legit/"$branch"/commit/"commit_"$commit""
+if [ ! -z "$(ls -A .legit/add)" ]; then
+	cp ".legit/add"/* .legit/"$branch"/commit/"commit_"$commit""
+	rm -f .legit/"$branch"/add/* 	
+	mv ".legit/add"/* .legit/"$branch"/add/
 fi
 echo -n "commit $commit $commitmessage\\n" >>.legit/"$branch"/commit/commit_history.txt
 echo "Committed as commit "$commit""

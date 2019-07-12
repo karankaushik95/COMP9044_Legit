@@ -15,14 +15,12 @@ fi
 for file in "$@" 
 do
 	files=$(echo "$file" | egrep "[^a-zA-Z0-9._-]")	
-	#echo $files	
 	if [ ! -z $files ]; then	
 		echo ""$filename": error: invalid filename '"$file"'" >&2
 		exit 1
 	fi
 done
 branch=`cat .legit/current_branch`
-#echo $branch
 
 for file in "$@"
 do
@@ -41,6 +39,6 @@ done
 for file in "$@"
 do
 	if [ -f "$file" ]; then 		
-		cp "$file" .legit/"$branch"/add
+		cp "$file" .legit/add
 	fi
 done

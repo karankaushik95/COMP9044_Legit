@@ -21,7 +21,7 @@ $delete = 0;
 if (!@ARGV){
 
 	listBranches();
-	exit();	
+	exit 0;	
 }
 
 elsif ($ARGV[0] =~ /^-d/){

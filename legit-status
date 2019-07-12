@@ -21,17 +21,17 @@ if [ ! -z "$(ls -A .legit/"$branch"/commit/commit_$commit)" ]; then
 		file=`basename "$file"`
 		#echo $file		
 		if [ ! -d  "$file" ]; then		
-			if [ ! -f .legit/"$branch"/add/"$file" ]; then
+			if [ ! -f .legit/add/"$file" ]; then
 				if [ -f "$file" ]; then
 					echo ""$file" - untracked" >>.status;
 				else
 					echo ""$file" - deleted" >>.status;
 				fi
 			else
-				if [ -z "$(diff -q .legit/"$branch"/add/"$file" .legit/"$branch"/commit/commit_$commit/"$file")" ]; then
+				if [ -z "$(diff -q .legit/add/"$file" .legit/"$branch"/commit/commit_$commit/"$file")" ]; then
 					if [ ! -f "$file" ]; then
 						echo ""$file" - file deleted" >>.status;									
-					elif [ -z "$(diff -q ".legit/"$branch"/add/"$file"" "$file")" ]; then
+					elif [ -z "$(diff -q ".legit/add/"$file"" "$file")" ]; then
 						echo ""$file" - same as repo" >>.status;
 					else
 						echo ""$file" - file changed, changes not staged for commit" >>.status;
@@ -39,7 +39,7 @@ if [ ! -z "$(ls -A .legit/"$branch"/commit/commit_$commit)" ]; then
 				else
 					if [ ! -f "$file" ]; then
 						echo ""$file" - file deleted" >>.status;												
-					elif [ -z "$(diff -q ".legit/"$branch"/add/"$file"" "$file")" ]; then
+					elif [ -z "$(diff -q ".legit/add/"$file"" "$file")" ]; then
 						echo ""$file" - file changed, changes staged for commit" >>.status;
 					else
 						echo ""$file" - file changed, different changes staged for commit" >>.status;
@@ -50,9 +50,9 @@ if [ ! -z "$(ls -A .legit/"$branch"/commit/commit_$commit)" ]; then
 	done
 fi
 
-if [ ! -z "$(ls -A .legit/"$branch"/add/)" ]; then
+if [ ! -z "$(ls -A .legit/add/)" ]; then
 
-	for file in ".legit/"$branch"/add"/*; do
+	for file in ".legit/add"/*; do
 		file=`basename "$file"`
 		if [ ! -d  "$file" ]; then		
 			if ! grep -q "^$file" .status			
