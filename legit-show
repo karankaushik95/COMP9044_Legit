@@ -22,6 +22,13 @@ if [ -z "$check" ]; then
 fi
 commit=$(echo "$1" | cut -d':' -f1)
 file=$(echo "$1" | cut -d':' -f2)
+
+files=$(echo "$file" | egrep "[^a-zA-Z0-9._-]")	
+if [ ! -z $files ]; then	
+	echo ""$filename": error: invalid filename '"$file"'" >&2
+	exit 1
+fi
+
 if [ -z $commit ]; then
 
 	if [ ! -f .legit/add/"$file" ]; then
@@ -32,7 +39,12 @@ if [ -z $commit ]; then
 		exit 1
 	fi
 fi
-			
+
+testing=$(echo "$commit" | egrep [0-9])			
+if [ -z $testing ]; then
+	echo "usage: $filename <commit>:<filename>" >&2
+	exit 1
+fi
 
 check=$(cat .legit/"$branch"/commit/commit_history.txt | egrep "commit $commit")
 if [ -z "$check" ]; then

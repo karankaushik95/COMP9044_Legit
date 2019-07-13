@@ -33,6 +33,14 @@ elsif ($ARGV[0] =~ /^-d/){
 
 $inputbranch = $ARGV[0];	
 
+if($inputbranch =~ /[^a-zA-Z0-9_-]/){
+	print STDERR "$filename: error: invalid branch name '$inputbranch'\n";
+	exit 1;
+}elsif($inputbranch =~ /^[0-9]+$/){
+	print STDERR "$filename: error: invalid branch name '$inputbranch'\n";
+	exit 1;
+}
+
 if (@ARGV>1 or $branch =~ /^-/){
 	print STDERR "usage: $filename [-d] <branch>\n";
 	exit 1;

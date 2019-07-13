@@ -26,3 +26,4 @@ Date		Start	Stop	Activity	Comments
 09/07/19	23:00	02:00	coding		Finished legit-branch. Have idea for legit-checkout
 11/07/19	22:00	22:20	coding		Changed all exit codes to 1, and changed all error messages to print to stderr instead
 12/07/19	10:00	11:30	coding		Started legit-checkout. Discovered have to change things for legit-checkout. Changing things. Committing broken code yeehaw
+13/07/19	20:45	01:00	coding		Started writing test scripts. Fixed few last minute bugs.
