@@ -50,31 +50,31 @@ sub switchBranch{
 	open $F, '>', ".legit/current_branch" or die "$filename: This wasn't supposed to happen. Why did you betray me legit-init?\n";
 	print $F $switch;
 	close $F;
-	my @files = glob("/*");
-	my @target = glob("/$switch._wd/*");	
-	rmtree $branch._wd;
-	mkdir $branch._wd;	
-	foreach my $file (@files){
-		if (-f $file){
-			
-			copy("$file", $branch._wd);
-			if (grep (/^$file$/, @target){			
-				next;		
-			}
-			else{
-				unlink $file;
-			}	
-		}	
-	}
-	foreach my $file (@target){
-		if(grep($switch._wd/$file, @files){
-			next;		
-		}
-		copy($switch._wd/$file,	/.);
-	}
-	
-	my @files = glob("/.legit/commit/*");
-	my @target = glob("/.legit/$branch/add/*");	
+#	my @files = glob("/*");
+#	my @target = glob("/$switch._wd/*");	
+#	rmtree $branch._wd;
+#	mkdir $branch._wd;	
+	#foreach my $file (@files){
+	#	if (-f $file){
+	#		
+#			copy("$file", $branch._wd);
+#			if (grep (/^$file$/, @target){			
+#				next;		
+#			}
+#			else{
+#				unlink $file;
+#			}	
+#		}	
+#	}
+#	foreach my $file (@target){
+#		if(grep($switch._wd/$file, @files){
+#			next;		
+#		}
+#		copy($switch._wd/$file,	/.);
+#	}
+#	
+#	my @files = glob("/$legit/commit/*");
+#	my @target = glob("/"$legit"/"$branch"/add/*");	
 			
 	print "Switched to branch '$switch'\n";
 	exit 0;
