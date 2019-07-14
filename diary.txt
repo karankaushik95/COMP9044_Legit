@@ -21,9 +21,10 @@ Date		Start	Stop	Activity	Comments
 07/07/19	03:10	04:00	debugging	i lied i hate myself nothing works now why is legit-rm so hard why is life so hard
 07/07/19	13:00	18:30	debugging	I don't know how I fixed it but legit-rm works now
 07/07/19	21:00	21:30	coding		started legit-status. Wrote a basic loop just to get all the files in another status file. Now dinner break :) Pizza here I come! 
-07/07/19	22:30	00:30	coding		Finished legit-status. Fixed bug in legit-rm cause of exit 1s. Used continue instead
+07/07/19	22:30	00:30	coding		Finished legit-status. Fixed bug in legit-rm cause of exit 1's. Used continue instead
 09/07/19	21:00	22:00	coding		Started subset-2. preparing to make changes in earlier code to accommodate branches. Found some earlier overlooked bugs
 09/07/19	23:00	02:00	coding		Finished legit-branch. Have idea for legit-checkout
 11/07/19	22:00	22:20	coding		Changed all exit codes to 1, and changed all error messages to print to stderr instead
 12/07/19	10:00	11:30	coding		Started legit-checkout. Discovered have to change things for legit-checkout. Changing things. Committing broken code yeehaw
 13/07/19	20:45	01:00	coding		Started writing test scripts. Fixed few last minute bugs.
+14/07/19	14:00	16:45	coding		Last of the test scripts and an attempt at legit-checkout. Gave up on checkout. Finishing scripts and submitting

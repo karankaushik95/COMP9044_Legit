@@ -66,6 +66,10 @@ commit=$(( commit+1 ))
 mkdir .legit/"$branch"/commit/"commit_"$commit""
 if [ ! -z "$(ls -A .legit/add)" ]; then
 	cp ".legit/add"/* .legit/"$branch"/commit/"commit_"$commit""
+	rm -rf .legit/"$branch"/add/*
+	cp ".legit/add"/* .legit/"$branch"/add/
+	#rm -rf "$branch"_wd/*	
+	#cp ".legit/add"/* ""$branch"_wd"
 fi
 echo -n "commit $commit $commitmessage\\n" >>.legit/"$branch"/commit/commit_history.txt
 echo "Committed as commit "$commit""

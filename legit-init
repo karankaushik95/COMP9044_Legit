@@ -13,6 +13,7 @@ fi
 mkdir -p ".legit/master/commit"
 mkdir -p ".legit/master/add"
 mkdir -p ".legit/add"
+#mkdir -p "master_wd"
 echo "master" > ".legit/branches"
 echo -n "master" > ".legit/current_branch"
 echo "Initialized empty legit repository in .legit"

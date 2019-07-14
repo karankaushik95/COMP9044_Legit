@@ -1,6 +1,8 @@
 #!/usr/bin/perl -w
 
 use File::Basename;
+use File::Copy;
+use File::Path;
 
 $legit = '.legit';
 $filename = basename($0);
@@ -10,8 +12,8 @@ if (! -d $legit){
 	print STDERR "$filename: error: no .legit directory containing legit repository exists\n";
 	exit 1;
 }
-
-my @files = glob("./.legit/$branch/commit/*");
+$current_branch = getBranch();
+my @files = glob("./.legit/$current_branch/commit/*");
 @files or (print STDERR "$filename: error: your repository does not have any commits yet\n" and exit 1);
 
 if (@ARGV != 1){
@@ -20,19 +22,70 @@ if (@ARGV != 1){
 }
 
 $branch=$ARGV[0];
-$current_branch = getBranch();
+
+if ($branch eq $current_branch){
+
+	print "Already on '$branch'\n";
+	exit 0;
+}
+
+open $F, '<', ".legit/branches" or die "$filename: This wasn't supposed to happen. Why did you betray me legit-init?\n";
+@branches = <$F>;
+close $F;
+
+if (grep (/^$branch/, @branches)){
+
+	switchBranch($branch, $current_branch);
+}else{
+
+	print STDERR "$filename: error: unknown branch '$branch'\n";
+	exit 1;
+}
+
+sub switchBranch{
+	
+	my (@args) = @_;
+	my $switch = $args[0];
+	my $branch = $args[1];
+	open $F, '>', ".legit/current_branch" or die "$filename: This wasn't supposed to happen. Why did you betray me legit-init?\n";
+	print $F $switch;
+	close $F;
+	my @files = glob("/*");
+	my @target = glob("/$switch._wd/*");	
+	rmtree $branch._wd;
+	mkdir $branch._wd;	
+	foreach my $file (@files){
+		if (-f $file){
+			
+			copy("$file", $branch._wd);
+			if (grep (/^$file$/, @target){			
+				next;		
+			}
+			else{
+				unlink $file;
+			}	
+		}	
+	}
+	foreach my $file (@target){
+		if(grep($switch._wd/$file, @files){
+			next;		
+		}
+		copy($switch._wd/$file,	/.);
+	}
+	
+	my @files = glob("/.legit/commit/*");
+	my @target = glob("/.legit/$branch/add/*");	
+			
+	print "Switched to branch '$switch'\n";
+	exit 0;
+}
+
 
 sub getBranch{
 
-	open $F, '<' , ".legit/current_branch";
+	open $F, '<' , ".legit/current_branch" or die "$filename: This wasn't supposed to happen. Why did you betray me legit-init?\n";
 	my $branch=<$F>;
 	close $F;
 	return $branch;
 
-}
-
-if ($branch eq $current_branch){
-
-	print "Already on '$branch'";
-	exit 0;
 }

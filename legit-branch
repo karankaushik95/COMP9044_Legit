@@ -23,7 +23,6 @@ if (!@ARGV){
 	listBranches();
 	exit 0;	
 }
-
 elsif ($ARGV[0] =~ /^-d/){
 
 	$delete = 1;
@@ -41,7 +40,7 @@ if($inputbranch =~ /[^a-zA-Z0-9_-]/){
 	exit 1;
 }
 
-if (@ARGV>1 or $branch =~ /^-/){
+if (@ARGV>1 or $inputbranch =~ /^-/){
 	print STDERR "usage: $filename [-d] <branch>\n";
 	exit 1;
 }
@@ -83,12 +82,13 @@ sub createBranch{
 		exit 1;
 	}else{
 		mkdir ".legit/$create";
+		#mkdir "$create"._wd;
 		open $F, '>>', ".legit/branches";
 		print $F $create;
 		print $F "\n";
 		close $F;
 		rcopy(".legit/$branch", ".legit/$create");			
-		
+		#rcopy("$branch"._wd, "$create"._wd);
 	}
 	
 }
@@ -104,6 +104,8 @@ sub deleteBranch{
 		exit 1;
 	}
 	rmtree ".legit/$destroy";
+	#$wd = "$destroy"._wd;
+	#rmtree "$wd";
 	open $F, '<', ".legit/branches";
 	my @array = <$F>;
 	close $F;

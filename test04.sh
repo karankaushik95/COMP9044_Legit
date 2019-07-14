@@ -13,7 +13,7 @@ legit-commit -a a #usage error
 legit-commit -a -m message	#nothing to commit
 legit-add a
 legit-commit -m message	#committed as commit 0
-legit-commit -a -m test	#nothing to commit
+legit-commit -a -m testing	#nothing to commit
 echo abc>a
 legit-add a
 echo pqr>>a

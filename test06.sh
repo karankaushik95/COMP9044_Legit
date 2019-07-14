@@ -14,7 +14,7 @@ legit-add a b
 legit-status #changes staged for commit -a , added to index -b
 echo pqrf>a
 legit-status #changes made, different changes staged for commit, added to index
-legit-commit -m test
+legit-commit -m testq
 legit-status #changes not staged for commit, same as repo
 legit-rm --forced --cached b
 legit-status #b deleted
